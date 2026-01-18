@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Engineering Resources</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f172a'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='monospace' font-weight='bold' font-size='50'>AI</text></svg>">
+
+    <!-- Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter Tight', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        slate: { 850: '#151b28', 950: '#0b0f19' },
+                        primary: { 500: '#3b82f6', 600: '#2563eb' }
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px -5px rgba(59, 130, 246, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Styles -->
+    <style>
+        :root {
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --border-subtle: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        .tech-card {
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .tech-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+            border-color: #94a3b8;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .tag-badge {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.025em;
+            text-transform: uppercase;
+        }
+
+        .chart-container-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            height: 250px;
+            max-height: 300px;
+        }
+
+        .js-plotly-plot .plotly .modebar {
+            display: none !important;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        }
+
+        .filter-section-title {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .custom-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+        }
+
+        .custom-checkbox:hover {
+            background: #f1f5f9;
+        }
+
+        .custom-checkbox input {
+            cursor: pointer;
+        }
+
+        .custom-checkbox span {
+            font-size: 13px;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .custom-checkbox input:checked+span {
+            color: #3b82f6;
+        }
+
+        .ai-btn {
+            transition: all 0.2s ease;
+        }
+
+        .ai-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #0f172a;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .filter-chip {
+            transition: all 0.2s ease;
+        }
+
+        .filter-chip.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col h-screen text-slate-800">
+
+    <!-- Header / Command Bar -->
+    <header class="h-16 glass z-50 flex items-center justify-between px-4 sm:px-6 sticky top-0">
+        <div class="flex items-center gap-2 sm:gap-3">
+            <button onclick="toggleFilterDrawer()"
+                class="lg:hidden p-2 -ml-2 text-slate-600 hover:bg-slate-100 rounded-md">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+            <div
+                class="w-8 h-8 flex-shrink-0 bg-slate-900 rounded-lg flex items-center justify-center text-white font-bold font-mono shadow-lg">
+                AI
+            </div>
+            <div class="hidden sm:block">
+                <h1 class="text-sm font-bold tracking-tight text-slate-900 uppercase">ai engineering resources</h1>
+            </div>
+        </div>
+
+        <div class="flex-1 max-w-2xl mx-2 sm:mx-6 relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+            <input type="text" id="search-input"
+                class="block w-full pl-10 pr-3 py-2 bg-slate-100 border border-transparent rounded-lg text-sm text-slate-900 placeholder-slate-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium"
+                placeholder="Search tools...">
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                <kbd
+                    class="hidden lg:inline-block px-1.5 py-0.5 border border-slate-300 rounded text-[10px] font-mono text-slate-400">⌘K</kbd>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-4">
+            <button onclick="toggleDrawer()" class="relative group p-2 rounded-md hover:bg-slate-100 transition-colors">
+                <svg class="w-6 h-6 text-slate-600 group-hover:text-blue-600" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+                    </path>
+                </svg>
+                <span id="stack-count" class="absolute top-1 right-1 flex h-2.5 w-2.5">
+                    <span
+                        class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75 hidden"
+                        id="stack-ping"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-slate-300" id="stack-dot"></span>
+                </span>
+            </button>
+        </div>
+    </header>
+
+
+
+    <div class="flex flex-1 overflow-hidden">
+
+        <!-- Left Sidebar: Visual Nav -->
+        <aside class="w-72 bg-white border-r border-slate-200 hidden lg:flex flex-col">
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                <h3 class="text-xs font-bold text-slate-900 uppercase tracking-widest">Filter Resources</h3>
+                <button onclick="clearAllFilters()"
+                    class="text-[10px] font-bold text-blue-600 hover:text-blue-700 uppercase">Clear All</button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto custom-scroll p-5 space-y-8">
+                <!-- Category Section -->
+                <div>
+
+                    <div id="sidebar-categories" class="space-y-1">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Tag Section -->
+                <div>
+
+                    <div id="sidebar-tags" class="grid grid-cols-1 gap-1">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Type Section -->
+                <div>
+
+                    <div id="sidebar-types" class="space-y-1">
+                        <!-- Injected by JS -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 bg-slate-50 overflow-y-auto custom-scroll relative" id="main-scroll">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+                <!-- Breadcrumbs & Status -->
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-1">
+                            <span>Resources</span>
+                            <span>/</span>
+                            <span id="current-filter-label" class="font-medium text-slate-900">All Categories</span>
+                        </div>
+                        <h2 class="text-2xl font-bold tracking-tight text-slate-900">The Collection</h2>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="clearAllFilters()"
+                            class="px-3 py-1.5 text-xs font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 shadow-sm transition-all hidden"
+                            id="reset-btn">Reset Filters</button>
+                    </div>
+                </div>
+
+                <!-- Grid -->
+                <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 pb-24">
+                    <!-- Cards injected here -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="hidden flex flex-col items-center justify-center py-24 text-center">
+                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-medium text-slate-900">No resources found</h3>
+                    <p class="text-slate-500 max-w-sm mt-1">We couldn't find any tools matching your specific search
+                        criteria.</p>
+                    <button onclick="resetFilters()"
+                        class="mt-4 px-4 py-2 bg-slate-900 text-white rounded-lg text-sm font-medium hover:bg-slate-800">Clear
+                        Search</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Filter Drawer -->
+        <div id="filter-drawer-backdrop" onclick="toggleFilterDrawer()"
+            class="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 hidden transition-opacity opacity-0 lg:hidden">
+        </div>
+        <aside id="filter-drawer"
+            class="fixed inset-y-0 left-0 w-full sm:w-[320px] bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col border-r border-slate-200 lg:hidden">
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                <h3 class="text-xs font-bold text-slate-900 uppercase tracking-widest">Filter Resources</h3>
+                <button onclick="toggleFilterDrawer()" class="text-slate-400 hover:text-slate-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto custom-scroll p-5 space-y-8" id="mobile-filter-container">
+                <!-- Content copied via JS from desktop sidebar or rendered separately -->
+            </div>
+            <div class="p-4 border-t border-slate-100 bg-slate-50">
+                <button onclick="clearAllFilters(); toggleFilterDrawer();"
+                    class="w-full py-2 text-sm font-bold text-blue-600 hover:text-blue-700 uppercase border border-blue-200 rounded-lg">Clear
+                    All Filters</button>
+            </div>
+        </aside>
+
+        <!-- Right Drawer: Stack Builder -->
+        <div id="drawer-backdrop" onclick="toggleDrawer()"
+            class="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 hidden transition-opacity opacity-0"></div>
+        <aside id="drawer"
+            class="fixed inset-y-0 right-0 w-full sm:w-[400px] bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col border-l border-slate-200">
+
+            <div class="p-5 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Your Tech Stack</h2>
+                    <p class="text-xs text-slate-500">Select tools to build your pipeline.</p>
+                </div>
+                <button onclick="toggleDrawer()" class="text-slate-400 hover:text-slate-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-6 custom-scroll">
+
+                <!-- Visual Analysis -->
+                <div class="mb-8">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Composition Analysis
+                    </h4>
+                    <div class="chart-container-wrapper">
+                        <div class="chart-container" style="height: 200px;">
+                            <canvas id="stackChart"></canvas>
+                        </div>
+                    </div>
+                    <div id="stack-analysis-text"
+                        class="mt-4 text-xs text-center text-slate-500 bg-slate-50 p-3 rounded border border-slate-100 italic">
+                        Start adding tools to see insights.
+                    </div>
+                </div>
+
+                <h4
+                    class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 flex items-center justify-between">
+                    Selected Tools <span id="stack-counter"
+                        class="bg-slate-100 px-2 py-0.5 rounded text-slate-600">0</span>
+                </h4>
+
+                <div id="stack-list" class="space-y-3">
+                    <div class="text-center py-10 border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+                        <p class="text-sm text-slate-400 font-medium">Your stack is empty</p>
+                        <p class="text-xs text-slate-400 mt-1">Browse and click '+' to add tools</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="p-4 border-t border-slate-100 bg-slate-50">
+                <button onclick="copyStack()"
+                    class="w-full py-2.5 bg-slate-900 hover:bg-blue-600 text-white rounded-lg font-medium shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center gap-2 text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3">
+                        </path>
+                    </svg>
+                    Copy Stack to Clipboard
+                </button>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Data & Logic -->
+    <script>
+        // --- EXPANDED DATASET (130+ Items) ---
+        const resources = [
+            // 1. CORE FRAMEWORKS & APIs
+            { name: "OpenAI Python SDK", url: "https://platform.openai.com/docs", cat: "Core", sub: "API Client", desc: "Official bindings for GPT-4o and O1 models.", tags: ["Python"] },
+            { name: "Anthropic SDK", url: "https://docs.anthropic.com", cat: "Core", sub: "API Client", desc: "Access Claude 3.5 Sonnet and Opus models.", tags: ["Python", "TS"] },
+            { name: "Hugging Face Transformers", url: "https://huggingface.co/docs/transformers", cat: "Core", sub: "ML Library", desc: "The standard for downloading and running open models.", tags: ["PyTorch", "JAX"] },
+            { name: "LangChain", url: "https://python.langchain.com", cat: "Core", sub: "Orchestration", desc: "Building block framework for LLM apps.", tags: ["Framework"] },
+            { name: "LlamaIndex", url: "https://docs.llamaindex.ai", cat: "Core", sub: "Data Framework", desc: "Connect custom data to LLMs for RAG.", tags: ["RAG"] },
+            { name: "LiteLLM", url: "https://docs.litellm.ai", cat: "Core", sub: "Proxy", desc: "Call 100+ LLMs using the OpenAI input/output format.", tags: ["Utility"] },
+            { name: "Cohere SDK", url: "https://docs.cohere.com", cat: "Core", sub: "API Client", desc: "Enterprise-grade command and embedding models.", tags: ["Enterprise"] },
+            { name: "Mistral Client", url: "https://docs.mistral.ai", cat: "Core", sub: "API Client", desc: "Access Mistral Large, Small, and Codestral.", tags: ["Europe"] },
+            { name: "Google GenAI SDK", url: "https://ai.google.dev/docs", cat: "Core", sub: "API Client", desc: "Gemini Pro and Flash model access.", tags: ["Google"] },
+            { name: "Instructor", url: "https://python.useinstructor.com", cat: "Core", sub: "Structured Data", desc: "Structured outputs from LLMs using Pydantic.", tags: ["Validation"] },
+            { name: "Outlines", url: "https://github.com/outlines-dev/outlines", cat: "Core", sub: "Generation", desc: "Guaranteed JSON generation using FSMs.", tags: ["Regex"] },
+            { name: "Guidance", url: "https://github.com/guidance-ai/guidance", cat: "Core", sub: "Control", desc: "Control flow language for constrained generation.", tags: ["Microsoft"] },
+            { name: "Marvin", url: "https://askmarvin.ai", cat: "Core", sub: "Framework", desc: "Build AI engineering tools with Pythonic interfaces.", tags: ["DX"] },
+            { name: "DSPy", url: "https://github.com/stanfordnlp/dspy", cat: "Core", sub: "Optimization", desc: "Compile declarative modules into optimized prompts.", tags: ["Stanford"] },
+
+            // 2. INFERENCE (Local & Serving)
+            { name: "vLLM", url: "https://docs.vllm.ai", cat: "Inference", sub: "Serving", desc: "High-throughput serving with PagedAttention.", tags: ["Production"] },
+            { name: "Ollama", url: "https://ollama.ai", cat: "Inference", sub: "Local", desc: "Run Llama 3, Phi, and Mistral locally with ease.", tags: ["Local"] },
+            { name: "llama.cpp", url: "https://github.com/ggerganov/llama.cpp", cat: "Inference", sub: "Engine", desc: "Port of Llama model in C/C++.", tags: ["Low Level"] },
+            { name: "TGI", url: "https://huggingface.co/docs/text-generation-inference", cat: "Inference", sub: "Serving", desc: "Hugging Face Text Generation Inference server.", tags: ["Rust"] },
+            { name: "MLX", url: "https://ml-explore.github.io/mlx", cat: "Inference", sub: "Apple Silicon", desc: "Array framework for machine learning on Apple Silicon.", tags: ["Mac"] },
+            { name: "SGLang", url: "https://github.com/sgl-project/sglang", cat: "Inference", sub: "Optimization", desc: "Structured Generation Language for fast inference.", tags: ["RadixAttention"] },
+            { name: "TensorRT-LLM", url: "https://github.com/NVIDIA/TensorRT-LLM", cat: "Inference", sub: "Optimization", desc: "NVIDIA's toolkit for optimizing LLM inference.", tags: ["NVIDIA"] },
+            { name: "ExLlamaV2", url: "https://github.com/turboderp/exllamav2", cat: "Inference", sub: "Local", desc: "Fastest Python/C++ inference for modern GPUs.", tags: ["Quantization"] },
+            { name: "Aphrodite Engine", url: "https://github.com/PygmalionAI/aphrodite-engine", cat: "Inference", sub: "Serving", desc: "Large-scale inference engine for thousands of users.", tags: ["Scale"] },
+            { name: "CTranslate2", url: "https://opennmt.net/CTranslate2", cat: "Inference", sub: "Engine", desc: "Fast inference engine for Transformer models.", tags: ["CPU/GPU"] },
+            { name: "DeepSparse", url: "https://github.com/neuralmagic/deepsparse", cat: "Inference", sub: "CPU", desc: "Sparsity-aware inference engine for CPUs.", tags: ["CPU"] },
+            { name: "Candle", url: "https://github.com/huggingface/candle", cat: "Inference", sub: "Rust", desc: "Minimalist ML framework for Rust.", tags: ["Rust"] },
+            { name: "LocalAI", url: "https://localai.io", cat: "Inference", sub: "API Proxy", desc: "Drop-in replacement for OpenAI API locally.", tags: ["Self-Hosted"] },
+            { name: "WebLLM", url: "https://webllm.mlc.ai", cat: "Inference", sub: "Browser", desc: "Run LLMs directly in the browser via WebGPU.", tags: ["Client Side"] },
+
+            // 3. TRAINING & FINE-TUNING
+            { name: "PEFT", url: "https://huggingface.co/docs/peft", cat: "Training", sub: "Adapters", desc: "Parameter-Efficient Fine-Tuning (LoRA, QLoRA).", tags: ["Hugging Face"] },
+            { name: "Unsloth", url: "https://github.com/unslothai/unsloth", cat: "Training", sub: "Optimization", desc: "2x faster training, 60% less memory.", tags: ["Speed"] },
+            { name: "Axolotl", url: "https://github.com/OpenAccess-AI-Collective/axolotl", cat: "Training", sub: "Framework", desc: "Config-based fine-tuning for everyone.", tags: ["No-Code"] },
+            { name: "Torchtune", url: "https://pytorch.org/torchtune", cat: "Training", sub: "Library", desc: "PyTorch native library for LLM fine-tuning.", tags: ["PyTorch"] },
+            { name: "LLaMA Factory", url: "https://github.com/hiyouga/LLaMA-Factory", cat: "Training", sub: "Web UI", desc: "Efficient fine-tuning with a WebUI.", tags: ["GUI"] },
+            { name: "DeepSpeed", url: "https://www.deepspeed.ai", cat: "Training", sub: "Distributed", desc: "Optimization for distributed training.", tags: ["Microsoft"] },
+            { name: "Megatron-LM", url: "https://github.com/NVIDIA/Megatron-LM", cat: "Training", sub: "Pretraining", desc: "Large-scale model training framework.", tags: ["NVIDIA"] },
+            { name: "LitGPT", url: "https://github.com/Lightning-AI/litgpt", cat: "Training", sub: "Library", desc: "Hackable implementation of state-of-the-art LLMs.", tags: ["Lightning"] },
+            { name: "TRL", url: "https://huggingface.co/docs/trl", cat: "Training", sub: "RLHF", desc: "Transformer Reinforcement Learning (DPO, PPO).", tags: ["RLHF"] },
+            { name: "Nanotron", url: "https://github.com/huggingface/nanotron", cat: "Training", sub: "Pretraining", desc: "Minimalist training library by Hugging Face.", tags: ["3D Parallelism"] },
+            { name: "Ludwig", url: "https://ludwig.ai", cat: "Training", sub: "Declarative", desc: "Low-code framework for building custom models.", tags: ["Declarative"] },
+            { name: "AutoTrain Advanced", url: "https://huggingface.co/autotrain", cat: "Training", sub: "No-Code", desc: "Faster and easier training on Hugging Face.", tags: ["SaaS"] },
+
+            // 4. VECTOR DATABASES & DATA
+            { name: "Pinecone", url: "https://docs.pinecone.io", cat: "Vector DB", sub: "Managed", desc: "Serverless vector database for AI.", tags: ["SaaS"] },
+            { name: "Weaviate", url: "https://weaviate.io/developers/weaviate", cat: "Vector DB", sub: "Open Source", desc: "AI-native vector database with hybrid search.", tags: ["Hybrid"] },
+            { name: "Qdrant", url: "https://qdrant.tech/documentation", cat: "Vector DB", sub: "Open Source", desc: "Vector search engine written in Rust.", tags: ["Rust"] },
+            { name: "Milvus", url: "https://milvus.io/docs", cat: "Vector DB", sub: "Scale", desc: "Cloud-native vector database for scale.", tags: ["Enterprise"] },
+            { name: "Chroma", url: "https://docs.trychroma.com", cat: "Vector DB", sub: "Local", desc: "Open-source embedding database.", tags: ["Dev Friendly"] },
+            { name: "LanceDB", url: "https://lancedb.github.io/lancedb", cat: "Vector DB", sub: "Embedded", desc: "Serverless, embedded vector DB for AI apps.", tags: ["Parquet"] },
+            { name: "pgvector", url: "https://github.com/pgvector/pgvector", cat: "Vector DB", sub: "SQL", desc: "Open-source vector similarity search for Postgres.", tags: ["SQL"] },
+            { name: "Elasticsearch", url: "https://www.elastic.co/guide/en/elasticsearch/reference/current/knn-search.html", cat: "Vector DB", sub: "Search", desc: "Distributed search with vector capabilities.", tags: ["Search"] },
+            { name: "Vespa", url: "https://docs.vespa.ai", cat: "Vector DB", sub: "Engine", desc: "Big data serving engine.", tags: ["Yahoo"] },
+            { name: "Supabase", url: "https://supabase.com/docs/guides/ai", cat: "Vector DB", sub: "Platform", desc: "Open Source Firebase alternative with pgvector.", tags: ["BaaS"] },
+            { name: "Redis Stack", url: "https://redis.io/docs/stack", cat: "Vector DB", sub: "Memory", desc: "Redis with vector search module.", tags: ["Fast"] },
+            { name: "Marqo", url: "https://www.marqo.ai", cat: "Vector DB", sub: "Tensor", desc: "Tensor search engine.", tags: ["E2E"] },
+
+            // 5. RAG & DATA PROCESSING
+            { name: "Haystack", url: "https://docs.haystack.deepset.ai", cat: "RAG", sub: "Pipelines", desc: "End-to-end framework for RAG pipelines.", tags: ["Deepset"] },
+            { name: "Unstructured", url: "https://unstructured-io.github.io/unstructured", cat: "RAG", sub: "ETL", desc: "Ingest and process unstructured documents.", tags: ["ETL"] },
+            { name: "LlamaParse", url: "https://docs.cloud.llamaindex.ai/llamaparse/getting_started", cat: "RAG", sub: "Parser", desc: "Proprietary parser for complex PDFs.", tags: ["SaaS"] },
+            { name: "Marker", url: "https://github.com/VikParuchuri/marker", cat: "RAG", sub: "Parser", desc: "Convert PDF to Markdown quickly and accurately.", tags: ["OCR"] },
+            { name: "Semantic Router", url: "https://github.com/aurelio-labs/semantic-router", cat: "RAG", sub: "Routing", desc: "Superfast decision layer for LLMs.", tags: ["Optimization"] },
+            { name: "RAGFlow", url: "https://github.com/infiniflow/ragflow", cat: "RAG", sub: "Engine", desc: "Open-source RAG engine based on deep doc understanding.", tags: ["Engine"] },
+            { name: "Verba", url: "https://github.com/weaviate/Verba", cat: "RAG", sub: "App", desc: "The Golden RAGtriever by Weaviate.", tags: ["UI"] },
+            { name: "Embedchain", url: "https://docs.embedchain.ai", cat: "RAG", sub: "Framework", desc: "The open source RAG framework.", tags: ["Simple"] },
+            { name: "RAGatouille", url: "https://github.com/bclavie/RAGatouille", cat: "RAG", sub: "Retrieval", desc: "Easy to use ColBERT retrieval.", tags: ["ColBERT"] },
+            { name: "Txtai", url: "https://neuml.github.io/txtai", cat: "RAG", sub: "Embeddings", desc: "All-in-one embeddings database.", tags: ["Semantic"] },
+
+            // 6. AGENTS
+            { name: "LangGraph", url: "https://langchain-ai.github.io/langgraph", cat: "Agents", sub: "Orchestration", desc: "Build stateful, multi-actor apps with LLMs.", tags: ["Stateful"] },
+            { name: "CrewAI", url: "https://docs.crewai.com", cat: "Agents", sub: "Framework", desc: "Orchestrate role-playing autonomous agents.", tags: ["Roles"] },
+            { name: "AutoGen", url: "https://microsoft.github.io/autogen", cat: "Agents", sub: "Multi-Agent", desc: "Enable next-gen LLM applications.", tags: ["Microsoft"] },
+            { name: "MetaGPT", url: "https://github.com/geekan/MetaGPT", cat: "Agents", sub: "Framework", desc: "Multi-agent framework: Assign different roles.", tags: ["SOP"] },
+            { name: "BabyAGI", url: "https://github.com/yoheinakajima/babyagi", cat: "Agents", sub: "Autonomous", desc: "Task management system for AI.", tags: ["Classic"] },
+            { name: "SuperAGI", url: "https://superagi.com/docs", cat: "Agents", sub: "Platform", desc: "Open source autonomous AI agent infrastructure.", tags: ["GUI"] },
+            { name: "ChatDev", url: "https://github.com/OpenBMB/ChatDev", cat: "Agents", sub: "Simulation", desc: "Virtual software company.", tags: ["Sim"] },
+            { name: "OpenDevin", url: "https://github.com/OpenDevin/OpenDevin", cat: "Agents", sub: "Coding", desc: "Open source autonomous software engineer.", tags: ["Code"] },
+            { name: "Letta (MemGPT)", url: "https://github.com/cpacker/MemGPT", cat: "Agents", sub: "Memory", desc: "OS for LLM agents with long-term memory.", tags: ["Memory"] },
+            { name: "PraisonAI", url: "https://docs.praison.ai", cat: "Agents", sub: "No-Code", desc: "Auto-generating agents framework.", tags: ["Auto"] },
+            { name: "Langroid", url: "https://langroid.github.io/langroid", cat: "Agents", sub: "Multi-Agent", desc: "Harness LLMs with Multi-Agent Programming.", tags: ["Clean"] },
+
+            // 7. LLMOps & OBSERVABILITY
+            { name: "LangSmith", url: "https://docs.smith.langchain.com", cat: "LLMOps", sub: "Tracing", desc: "Debug, test, evaluate, and monitor chains.", tags: ["LangChain"] },
+            { name: "Weights & Biases", url: "https://docs.wandb.ai", cat: "LLMOps", sub: "Tracking", desc: "The AI developer platform.", tags: ["Tracking"] },
+            { name: "Arize Phoenix", url: "https://docs.arize.com/phoenix", cat: "LLMOps", sub: "Tracing", desc: "Open source observability for LLMs.", tags: ["Evals"] },
+            { name: "DeepEval", url: "https://docs.confident-ai.com", cat: "LLMOps", sub: "Testing", desc: "Unit testing for LLMs.", tags: ["Pytest"] },
+            { name: "TruLens", url: "https://www.trulens.org/trulens_eval/getting_started", cat: "LLMOps", sub: "Evaluation", desc: "Evaluation & tracking for LLM experiments.", tags: ["RAG Triad"] },
+            { name: "Giskard", url: "https://docs.giskard.ai", cat: "LLMOps", sub: "Testing", desc: "Testing framework for AI models.", tags: ["Safety"] },
+            { name: "HoneyHive", url: "https://docs.honeyhive.ai", cat: "LLMOps", sub: "Platform", desc: "Evaluation and observability platform.", tags: ["Prod"] },
+            { name: "PromptLayer", url: "https://docs.promptlayer.com", cat: "LLMOps", sub: "CMS", desc: "Prompt management and tracking.", tags: ["CMS"] },
+            { name: "Helicone", url: "https://docs.helicone.ai", cat: "LLMOps", sub: "Proxy", desc: "Open-source LLM observability platform.", tags: ["Gateway"] },
+            { name: "Portkey", url: "https://portkey.ai/docs", cat: "LLMOps", sub: "Gateway", desc: "Control panel for AI apps.", tags: ["Routing"] },
+            { name: "Galileo", url: "https://docs.rungalileo.io", cat: "LLMOps", sub: "Evaluation", desc: "Evaluation for RAG & GenAI.", tags: ["Enterprise"] },
+
+            // 8. DEPLOYMENT
+            { name: "SkyPilot", url: "https://skypilot.readthedocs.io", cat: "Deployment", sub: "Cloud", desc: "Run AI on any cloud, easily and cheaply.", tags: ["Cost"] },
+            { name: "Ray Serve", url: "https://docs.ray.io/en/latest/serve", cat: "Deployment", sub: "Serving", desc: "Scalable model serving library.", tags: ["Scale"] },
+            { name: "BentoML", url: "https://docs.bentoml.com", cat: "Deployment", sub: "Packaging", desc: "Unified model serving framework.", tags: ["Container"] },
+            { name: "KServe", url: "https://kserve.github.io/website", cat: "Deployment", sub: "K8s", desc: "Standardized inference protocol on Kubernetes.", tags: ["K8s"] },
+            { name: "Triton Server", url: "https://github.com/triton-inference-server/server", cat: "Deployment", sub: "Inference", desc: "NVIDIA's production inference server.", tags: ["NVIDIA"] },
+            { name: "Modal", url: "https://modal.com/docs", cat: "Deployment", sub: "Serverless", desc: "End-to-end serverless infrastructure for AI.", tags: ["Python"] },
+            { name: "RunPod", url: "https://docs.runpod.io", cat: "Deployment", sub: "GPU", desc: "Serverless GPU computing.", tags: ["Cloud"] },
+            { name: "Beam", url: "https://docs.beam.cloud", cat: "Deployment", sub: "Serverless", desc: "Run code on GPUs with serverless functions.", tags: ["Cloud"] },
+
+            // 9. SAFETY & SECURITY
+            { name: "Guardrails AI", url: "https://docs.guardrailsai.com", cat: "Safety", sub: "Validation", desc: "Enforce structural and quality constraints.", tags: ["XML"] },
+            { name: "NeMo Guardrails", url: "https://github.com/NVIDIA/NeMo-Guardrails", cat: "Safety", sub: "Security", desc: "Programmable guardrails for conversational AI.", tags: ["NVIDIA"] },
+            { name: "Lakera Guard", url: "https://www.lakera.ai/lakera-guard", cat: "Safety", sub: "Security", desc: "Protect LLMs against prompt injections.", tags: ["Security"] },
+            { name: "LLM Guard", url: "https://llm-guard.com", cat: "Safety", sub: "Scanner", desc: "Security toolkit for LLM interactions.", tags: ["Scanner"] },
+            { name: "Garak", url: "https://github.com/leondz/garak", cat: "Safety", sub: "Red Teaming", desc: "LLM vulnerability scanner.", tags: ["Hacking"] },
+            { name: "Presidio", url: "https://microsoft.github.io/presidio", cat: "Safety", sub: "Privacy", desc: "Context-aware PII anonymization.", tags: ["Microsoft"] },
+            { name: "Rebuff", url: "https://github.com/protectai/rebuff", cat: "Safety", sub: "Defense", desc: "Prompt injection detector.", tags: ["Injection"] },
+
+            // 10. MULTIMODAL
+            { name: "LlaVA", url: "https://llava-vl.github.io", cat: "Multimodal", sub: "Vision", desc: "Large Language-and-Vision Assistant.", tags: ["OSS"] },
+            { name: "CLIP", url: "https://github.com/openai/CLIP", cat: "Multimodal", sub: "Embeddings", desc: "Contrastive Language-Image Pre-training.", tags: ["OpenAI"] },
+            { name: "Whisper", url: "https://github.com/openai/whisper", cat: "Multimodal", sub: "Audio", desc: "Robust speech recognition.", tags: ["ASR"] },
+            { name: "Bark", url: "https://github.com/suno-ai/bark", cat: "Multimodal", sub: "TTS", desc: "Transformer-based text-to-audio.", tags: ["Suno"] },
+            { name: "OpenCLIP", url: "https://github.com/mlfoundations/open_clip", cat: "Multimodal", sub: "Vision", desc: "Open source implementation of CLIP.", tags: ["LAION"] }
+        ];
+
+        // --- STATE & UTILS ---
+        let currentStack = new Set();
+        let activeFilter = 'All';
+        let activeFilters = {
+            categories: new Set(),
+            tags: new Set(),
+            types: new Set()
+        };
+
+        // --- DOM REFERENCES ---
+        const grid = document.getElementById('grid-container');
+        const searchInput = document.getElementById('search-input');
+        const emptyState = document.getElementById('empty-state');
+        const drawer = document.getElementById('drawer');
+        const backdrop = document.getElementById('drawer-backdrop');
+        const stackCounter = document.getElementById('stack-counter');
+        const stackList = document.getElementById('stack-list');
+        const stackPing = document.getElementById('stack-ping');
+        const stackDot = document.getElementById('stack-dot');
+
+        // --- UTILITY FUNCTIONS ---
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="font-medium">${message}</span>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function openAIChat(platform, resourceName) {
+            const resource = resources.find(r => r.name === resourceName);
+            if (!resource) return;
+
+            const prompt = `I need comprehensive information about "${resource.name}" (${resource.desc}). 
+
+Please research the official documentation at: ${resource.url}
+
+Provide me with:
+1. A detailed overview of what ${resource.name} does
+2. Key features and capabilities
+3. Installation and setup instructions
+4. Basic usage examples
+5. Common use cases
+6. Integration with other tools
+7. Best practices and tips
+8. Any important limitations or considerations
+
+I'll be asking follow-up questions, so please become an expert on this tool by thoroughly reviewing its documentation.`;
+
+            // Platform Base URLs (with support for query params where possible)
+            const urls = {
+                claude: `https://claude.ai/new?q=${encodeURIComponent(prompt)}`,
+                chatgpt: `https://chatgpt.com/?q=${encodeURIComponent(prompt)}`,
+                gemini: `https://aistudio.google.com/prompts/new_chat?prompt=${encodeURIComponent(prompt)}`
+            };
+
+            const platformNames = {
+                claude: 'Claude',
+                chatgpt: 'ChatGPT',
+                gemini: 'Google AI Studio'
+            };
+
+            // Copy to clipboard as fallback/convenience
+            navigator.clipboard.writeText(prompt).then(() => {
+                // Open the platform with pre-filled prompt
+                window.open(urls[platform], '_blank');
+
+                // Show toast notification
+                showToast(`Opening ${platformNames[platform]} with pre-filled prompt! (Also copied to clipboard)`);
+            });
+        }
+
+
+
+        function initFilters() {
+            // Get unique values
+            const categories = [...new Set(resources.map(r => r.cat))].sort();
+            const tags = [...new Set(resources.flatMap(r => r.tags))].sort();
+            const types = [...new Set(resources.map(r => r.sub))].sort();
+
+            // Render to both desktop and mobile sidebar
+            const containers = [
+                { categories: 'sidebar-categories', tags: 'sidebar-tags', types: 'sidebar-types' },
+                { categories: 'mobile-filter-container', tags: 'mobile-filter-container', types: 'mobile-filter-container', isMobile: true }
+            ];
+
+            // Helper to render into a container
+            const renderSection = (title, items, type, container) => {
+                const section = document.createElement('div');
+                if (container.isMobile) section.className = 'mb-8';
+
+                const header = document.createElement('div');
+                header.className = 'filter-section-title';
+                header.innerText = title;
+                section.appendChild(header);
+
+                const list = document.createElement('div');
+                list.className = type === 'tags' ? 'grid grid-cols-1 gap-1' : 'space-y-1';
+
+                items.forEach(val => {
+                    const label = document.createElement('label');
+                    label.className = 'custom-checkbox';
+                    label.innerHTML = `
+                        <input type="checkbox" data-type="${type}" value="${val}" onchange="syncAndToggleFilter('${type}', '${val}', this)">
+                        <span>${val}</span>
+                    `;
+                    list.appendChild(label);
+                });
+                section.appendChild(list);
+
+                const containerId = container[type];
+                if (containerId && document.getElementById(containerId)) {
+                    document.getElementById(containerId).appendChild(section);
+                }
+            };
+
+            // Clear containers first if re-initializing
+            ['sidebar-categories', 'sidebar-tags', 'sidebar-types', 'mobile-filter-container'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.innerHTML = '';
+            });
+
+            // Render sections to both
+            containers.forEach(container => {
+                renderSection('Category', categories, 'categories', container);
+                renderSection('Tags', tags, 'tags', container);
+                renderSection('Type', types, 'types', container);
+            });
+        }
+
+        function syncAndToggleFilter(filterType, value, element) {
+            // Sync all checkboxes with the same value
+            document.querySelectorAll(`input[type="checkbox"][value="${value}"][data-type="${filterType}"]`).forEach(cb => {
+                cb.checked = element.checked;
+            });
+
+            if (element.checked) {
+                activeFilters[filterType].add(value);
+            } else {
+                activeFilters[filterType].delete(value);
+            }
+            applyFilters();
+        }
+
+        function toggleFilter(filterType, value, element) {
+            // Deprecated - using syncAndToggleFilter instead
+            syncAndToggleFilter(filterType, value, element);
+        }
+
+        function clearAllFilters() {
+            activeFilters = {
+                categories: new Set(),
+                tags: new Set(),
+                types: new Set()
+            };
+
+            // Uncheck all checkboxes
+            document.querySelectorAll('aside input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+
+            applyFilters();
+        }
+
+
+
+        function applyFilters() {
+            let filtered = resources;
+
+            // Apply category filters (OR within category)
+            if (activeFilters.categories.size > 0) {
+                filtered = filtered.filter(r => activeFilters.categories.has(r.cat));
+            }
+
+            // Apply tag filters (OR within tags)
+            if (activeFilters.tags.size > 0) {
+                filtered = filtered.filter(r =>
+                    r.tags.some(tag => activeFilters.tags.has(tag))
+                );
+            }
+
+            // Apply type filters (OR within types)
+            if (activeFilters.types.size > 0) {
+                filtered = filtered.filter(r => activeFilters.types.has(r.sub));
+            }
+
+            // Apply search if active
+            const searchTerm = searchInput.value.toLowerCase();
+            if (searchTerm) {
+                filtered = filtered.filter(r =>
+                    r.name.toLowerCase().includes(searchTerm) ||
+                    r.desc.toLowerCase().includes(searchTerm) ||
+                    r.sub.toLowerCase().includes(searchTerm) ||
+                    r.tags.some(t => t.toLowerCase().includes(searchTerm))
+                );
+            }
+
+            // Update status UI
+            const totalFilters = activeFilters.categories.size + activeFilters.tags.size + activeFilters.types.size;
+            document.getElementById('reset-btn').classList.toggle('hidden', totalFilters === 0 && !searchTerm);
+
+            // Update breadcrumb label
+            const label = document.getElementById('current-filter-label');
+            if (totalFilters === 0) {
+                label.innerText = 'All Resources';
+            } else {
+                label.innerText = `${filtered.length} Results Found`;
+            }
+
+            renderCards(filtered);
+        }
+
+        // --- RENDER LOGIC ---
+        function init() {
+            initFilters();
+            applyFilters();
+
+            // Keyboard shortcut for search
+            document.addEventListener('keydown', (e) => {
+                if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+            });
+        }
+
+
+
+        function renderCards(items) {
+            grid.innerHTML = '';
+
+            if (items.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            items.forEach((item, index) => {
+                const isSelected = currentStack.has(item.name);
+                const el = document.createElement('div');
+                el.className = `tech-card bg-white rounded-xl p-5 flex flex-col h-full relative group animate-fade-in cursor-pointer ${isSelected ? 'ring-2 ring-blue-500 border-transparent' : ''}`;
+                el.onclick = () => window.open(item.url, '_blank');
+                el.style.animationDelay = `${index * 20}ms`;
+
+                // Category Color Map
+                const colorMap = {
+                    'Core': 'text-blue-600 bg-blue-50',
+                    'Inference': 'text-purple-600 bg-purple-50',
+                    'Training': 'text-orange-600 bg-orange-50',
+                    'Vector DB': 'text-emerald-600 bg-emerald-50',
+                    'RAG': 'text-teal-600 bg-teal-50',
+                    'Agents': 'text-indigo-600 bg-indigo-50',
+                    'LLMOps': 'text-pink-600 bg-pink-50',
+                    'Deployment': 'text-cyan-600 bg-cyan-50',
+                    'Safety': 'text-red-600 bg-red-50',
+                    'Multimodal': 'text-fuchsia-600 bg-fuchsia-50'
+                };
+                const theme = colorMap[item.cat] || 'text-slate-600 bg-slate-50';
+
+                el.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="tag-badge px-2 py-1 rounded-md ${theme}">${item.cat}</span>
+                        <button onclick="event.stopPropagation(); toggleStack('${item.name.replace(/'/g, "\\'")}')" class="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-blue-600">
+                            ${isSelected ?
+                        `<svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>` :
+                        `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>`
+                    }
+                        </button>
+                    </div>
+                    
+                    <h3 class="font-bold text-slate-900 text-base mb-1">${item.name}</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-4 flex-1">${item.desc}</p>
+                    
+                    <div class="flex items-center gap-2 pt-3 border-t border-slate-50 mb-3">
+                        <span class="text-[10px] font-mono text-slate-400 uppercase">Type:</span>
+                        <span class="text-xs font-medium text-slate-700">${item.sub}</span>
+                    </div>
+
+                    <!-- AI Research Buttons -->
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="event.stopPropagation(); openAIChat('claude', '${item.name.replace(/'/g, "\\'")}')" class="ai-btn flex items-center justify-center gap-1.5 px-2 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-[10px] font-semibold transition-all">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/></svg>
+                            Claude
+                        </button>
+                        <button onclick="event.stopPropagation(); openAIChat('chatgpt', '${item.name.replace(/'/g, "\\'")}')" class="ai-btn flex items-center justify-center gap-1.5 px-2 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[10px] font-semibold transition-all">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.407-.667zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.142.08L8.704 5.46a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z"/></svg>
+                            GPT
+                        </button>
+                        <button onclick="event.stopPropagation(); openAIChat('gemini', '${item.name.replace(/'/g, "\\'")}')" class="ai-btn flex items-center justify-center gap-1.5 px-2 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-[10px] font-semibold transition-all">
+                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                            Gemini
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(el);
+            });
+        }
+
+
+
+        // --- SEARCH ---
+        searchInput.addEventListener('input', (e) => {
+            applyFilters();
+        });
+
+        function resetFilters() {
+            searchInput.value = '';
+            clearAllFilters();
+        }
+
+        // --- STACK LOGIC ---
+        function toggleStack(name) {
+            if (currentStack.has(name)) {
+                currentStack.delete(name);
+            } else {
+                currentStack.add(name);
+                if (stackPing) stackPing.classList.remove('hidden');
+                if (stackDot) {
+                    stackDot.classList.add('bg-blue-500', 'text-white');
+                    stackDot.classList.remove('bg-slate-300');
+                }
+                setTimeout(() => { if (stackPing) stackPing.classList.add('hidden'); }, 1000);
+            }
+            updateStackUI();
+            applyFilters();
+        }
+
+        let chartInstance = null;
+
+        function updateStackUI() {
+            stackCounter.innerText = currentStack.size;
+
+            stackList.innerHTML = '';
+            if (currentStack.size === 0) {
+                stackList.innerHTML = `
+                    <div class="text-center py-10 border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+                        <p class="text-sm text-slate-400 font-medium">Your stack is empty</p>
+                        <p class="text-xs text-slate-400 mt-1">Browse and click '+' to add tools</p>
+                    </div>`;
+            } else {
+                currentStack.forEach(name => {
+                    const item = resources.find(r => r.name === name);
+                    const div = document.createElement('div');
+                    div.className = "flex items-center justify-between p-3 bg-white border border-slate-100 rounded-lg shadow-sm group";
+                    div.innerHTML = `
+                        <div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase">${item.cat}</div>
+                            <div class="text-sm font-semibold text-slate-800">${item.name}</div>
+                        </div>
+                        <button onclick="toggleStack('${item.name.replace(/'/g, "\\'")}')" class="text-slate-300 hover:text-red-500 p-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                        </button>
+                    `;
+                    stackList.appendChild(div);
+                });
+            }
+
+            updateStackChart();
+        }
+
+        function updateStackChart() {
+            const ctx = document.getElementById('stackChart').getContext('2d');
+
+            if (chartInstance) chartInstance.destroy();
+
+            if (currentStack.size === 0) {
+                document.getElementById('stack-analysis-text').innerText = "Start adding tools to see insights.";
+                return;
+            }
+
+            const counts = {};
+            currentStack.forEach(name => {
+                const r = resources.find(r => r.name === name);
+                counts[r.cat] = (counts[r.cat] || 0) + 1;
+            });
+
+            const essentials = ['Core', 'Training', 'Deployment'];
+            const missing = essentials.filter(e => !counts[e]);
+            let insight = "";
+            if (missing.length > 0) {
+                insight = `Consider adding tools for: ${missing.join(', ')}.`;
+            } else {
+                insight = "Great balance! You have a full lifecycle stack.";
+            }
+            document.getElementById('stack-analysis-text').innerText = insight;
+
+            chartInstance = new Chart(ctx, {
+                type: 'polarArea',
+                data: {
+                    labels: Object.keys(counts),
+                    datasets: [{
+                        data: Object.values(counts),
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.6)',
+                            'rgba(139, 92, 246, 0.6)',
+                            'rgba(249, 115, 22, 0.6)',
+                            'rgba(16, 185, 129, 0.6)',
+                            'rgba(236, 72, 153, 0.6)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            ticks: { display: false },
+                            grid: { color: '#f1f5f9' }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+
+        // --- DRAWER ---
+        function toggleDrawer() {
+            const isClosed = drawer.classList.contains('translate-x-full');
+            if (isClosed) {
+                drawer.classList.remove('translate-x-full');
+                backdrop.classList.remove('hidden');
+                setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+            } else {
+                drawer.classList.add('translate-x-full');
+                backdrop.classList.add('opacity-0');
+                setTimeout(() => backdrop.classList.add('hidden'), 300);
+            }
+        }
+
+        function copyStack() {
+            const text = Array.from(currentStack).map(name => {
+                const r = resources.find(i => i.name === name);
+                return `• ${r.name} (${r.cat}): ${r.desc}`;
+            }).join('\n');
+
+            navigator.clipboard.writeText("My AI Stack (2026):\n\n" + text).then(() => {
+                showToast('Stack copied to clipboard!');
+            });
+        }
+
+        // --- MOBILE NAV ---
+        const filterDrawer = document.getElementById('filter-drawer');
+        const filterDrawerBackdrop = document.getElementById('filter-drawer-backdrop');
+        const mobileFilterContainer = document.getElementById('mobile-filter-container');
+
+        function toggleFilterDrawer() {
+            const isClosed = filterDrawer.classList.contains('-translate-x-full');
+            if (isClosed) {
+                // Populate mobile drawer if empty
+                if (mobileFilterContainer.children.length === 0) {
+                    const desktopSidebar = document.querySelector('aside.lg\\:flex flex-1');
+                    // Instead of copying, let's just make initFilters render to both
+                    initFilters();
+                }
+                filterDrawer.classList.remove('-translate-x-full');
+                filterDrawerBackdrop.classList.remove('hidden');
+                setTimeout(() => filterDrawerBackdrop.classList.remove('opacity-0'), 10);
+            } else {
+                filterDrawer.classList.add('-translate-x-full');
+                filterDrawerBackdrop.classList.add('opacity-0');
+                setTimeout(() => filterDrawerBackdrop.classList.add('hidden'), 300);
+            }
+        }
+
+        // Start
+        init();
+
+    </script>
+</body>
+
+</html>
