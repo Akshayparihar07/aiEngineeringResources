@@ -1,4 +1,4 @@
-# AI Engineering Resources
+# [AI Engineering Resources](https://akshayparihar07.github.io/aiEngineeringResources/)
 
 A dashboard for discovering and organizing the best tools, libraries, and resources for AI Engineering in 2026.
 
