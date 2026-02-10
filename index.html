@@ -463,12 +463,17 @@
             { name: "Outlines", url: "https://github.com/outlines-dev/outlines", cat: "Core", sub: "Generation", desc: "Guaranteed JSON generation using FSMs.", tags: ["Regex"] },
             { name: "Guidance", url: "https://github.com/guidance-ai/guidance", cat: "Core", sub: "Control", desc: "Control flow language for constrained generation.", tags: ["Microsoft"] },
             { name: "Marvin", url: "https://askmarvin.ai", cat: "Core", sub: "Framework", desc: "Build AI engineering tools with Pythonic interfaces.", tags: ["DX"] },
+            { name: "Vercel AI SDK", url: "https://sdk.vercel.ai", cat: "Core", sub: "Framework", desc: "TypeScript toolkit for AI-powered streaming interfaces.", tags: ["TS", "Streaming"] },
+            { name: "Pydantic AI", url: "https://ai.pydantic.dev", cat: "Core", sub: "Framework", desc: "Type-safe agent framework with FastAPI-like DX.", tags: ["Python", "Agents"] },
+            { name: "Smolagents", url: "https://huggingface.co/docs/smolagents", cat: "Core", sub: "Framework", desc: "Minimal code-first agent framework by Hugging Face.", tags: ["HF", "Simple"] },
+            { name: "Google ADK", url: "https://cloud.google.com/vertex-ai/generative-ai/docs/agent-builder", cat: "Core", sub: "Framework", desc: "Google's Agent Development Kit for Vertex AI.", tags: ["Google", "Agents"] },
             { name: "DSPy", url: "https://github.com/stanfordnlp/dspy", cat: "Core", sub: "Optimization", desc: "Compile declarative modules into optimized prompts.", tags: ["Stanford"] },
 
             // 2. INFERENCE (Local & Serving)
             { name: "vLLM", url: "https://docs.vllm.ai", cat: "Inference", sub: "Serving", desc: "High-throughput serving with PagedAttention.", tags: ["Production"] },
             { name: "Ollama", url: "https://ollama.ai", cat: "Inference", sub: "Local", desc: "Run Llama 3, Phi, and Mistral locally with ease.", tags: ["Local"] },
             { name: "llama.cpp", url: "https://github.com/ggerganov/llama.cpp", cat: "Inference", sub: "Engine", desc: "Port of Llama model in C/C++.", tags: ["Low Level"] },
+            { name: "MInference", url: "https://github.com/microsoft/MInference", cat: "Inference", sub: "Optimization", desc: "10x faster long-context inference via sparse attention.", tags: ["Microsoft", "Speed"] },
             { name: "TGI", url: "https://huggingface.co/docs/text-generation-inference", cat: "Inference", sub: "Serving", desc: "Hugging Face Text Generation Inference server.", tags: ["Rust"] },
             { name: "MLX", url: "https://ml-explore.github.io/mlx", cat: "Inference", sub: "Apple Silicon", desc: "Array framework for machine learning on Apple Silicon.", tags: ["Mac"] },
             { name: "SGLang", url: "https://github.com/sgl-project/sglang", cat: "Inference", sub: "Optimization", desc: "Structured Generation Language for fast inference.", tags: ["RadixAttention"] },
@@ -493,6 +498,8 @@
             { name: "TRL", url: "https://huggingface.co/docs/trl", cat: "Training", sub: "RLHF", desc: "Transformer Reinforcement Learning (DPO, PPO).", tags: ["RLHF"] },
             { name: "Nanotron", url: "https://github.com/huggingface/nanotron", cat: "Training", sub: "Pretraining", desc: "Minimalist training library by Hugging Face.", tags: ["3D Parallelism"] },
             { name: "Ludwig", url: "https://ludwig.ai", cat: "Training", sub: "Declarative", desc: "Low-code framework for building custom models.", tags: ["Declarative"] },
+            { name: "OpenRLHF", url: "https://github.com/OpenRLHF/OpenRLHF", cat: "Training", sub: "RLHF", desc: "Scalable RLHF with PPO, DPO & LoRA support.", tags: ["RL"] },
+            { name: "Colossal-AI", url: "https://colossalai.org", cat: "Training", sub: "Distributed", desc: "Make large AI models cheaper and faster.", tags: ["Scale"] },
             { name: "AutoTrain Advanced", url: "https://huggingface.co/autotrain", cat: "Training", sub: "No-Code", desc: "Faster and easier training on Hugging Face.", tags: ["SaaS"] },
 
             // 4. VECTOR DATABASES & DATA
@@ -508,16 +515,18 @@
             { name: "Supabase", url: "https://supabase.com/docs/guides/ai", cat: "Vector DB", sub: "Platform", desc: "Open Source Firebase alternative with pgvector.", tags: ["BaaS"] },
             { name: "Redis Stack", url: "https://redis.io/docs/stack", cat: "Vector DB", sub: "Memory", desc: "Redis with vector search module.", tags: ["Fast"] },
             { name: "Marqo", url: "https://www.marqo.ai", cat: "Vector DB", sub: "Tensor", desc: "Tensor search engine.", tags: ["E2E"] },
-
+            
             // 5. RAG & DATA PROCESSING
             { name: "Haystack", url: "https://docs.haystack.deepset.ai", cat: "RAG", sub: "Pipelines", desc: "End-to-end framework for RAG pipelines.", tags: ["Deepset"] },
             { name: "Unstructured", url: "https://unstructured-io.github.io/unstructured", cat: "RAG", sub: "ETL", desc: "Ingest and process unstructured documents.", tags: ["ETL"] },
             { name: "LlamaParse", url: "https://docs.cloud.llamaindex.ai/llamaparse/getting_started", cat: "RAG", sub: "Parser", desc: "Proprietary parser for complex PDFs.", tags: ["SaaS"] },
             { name: "Marker", url: "https://github.com/VikParuchuri/marker", cat: "RAG", sub: "Parser", desc: "Convert PDF to Markdown quickly and accurately.", tags: ["OCR"] },
             { name: "Semantic Router", url: "https://github.com/aurelio-labs/semantic-router", cat: "RAG", sub: "Routing", desc: "Superfast decision layer for LLMs.", tags: ["Optimization"] },
+            { name: "DocETL", url: "https://github.com/ucbepic/docetl", cat: "RAG", sub: "ETL", desc: "LLM-powered document processing pipelines.", tags: ["ETL"] },
             { name: "RAGFlow", url: "https://github.com/infiniflow/ragflow", cat: "RAG", sub: "Engine", desc: "Open-source RAG engine based on deep doc understanding.", tags: ["Engine"] },
             { name: "Verba", url: "https://github.com/weaviate/Verba", cat: "RAG", sub: "App", desc: "The Golden RAGtriever by Weaviate.", tags: ["UI"] },
             { name: "Embedchain", url: "https://docs.embedchain.ai", cat: "RAG", sub: "Framework", desc: "The open source RAG framework.", tags: ["Simple"] },
+            { name: "ClickHouse", url: "https://clickhouse.com/docs/en/engines/table-engines/mergetree-family/annindexes", cat: "Vector DB", sub: "OLAP", desc: "OLAP database with vector search capabilities.", tags: ["Analytics"] },
             { name: "RAGatouille", url: "https://github.com/bclavie/RAGatouille", cat: "RAG", sub: "Retrieval", desc: "Easy to use ColBERT retrieval.", tags: ["ColBERT"] },
             { name: "Txtai", url: "https://neuml.github.io/txtai", cat: "RAG", sub: "Embeddings", desc: "All-in-one embeddings database.", tags: ["Semantic"] },
 
@@ -528,6 +537,9 @@
             { name: "MetaGPT", url: "https://github.com/geekan/MetaGPT", cat: "Agents", sub: "Framework", desc: "Multi-agent framework: Assign different roles.", tags: ["SOP"] },
             { name: "BabyAGI", url: "https://github.com/yoheinakajima/babyagi", cat: "Agents", sub: "Autonomous", desc: "Task management system for AI.", tags: ["Classic"] },
             { name: "SuperAGI", url: "https://superagi.com/docs", cat: "Agents", sub: "Platform", desc: "Open source autonomous AI agent infrastructure.", tags: ["GUI"] },
+            { name: "OpenAI Agents SDK", url: "https://openai.github.io/openai-agents-python", cat: "Agents", sub: "Framework", desc: "Production-ready agent framework (successor to Swarm).", tags: ["OpenAI"] },
+            { name: "Agency Swarm", url: "https://github.com/VRSEN/agency-swarm", cat: "Agents", sub: "Orchestration", desc: "Multi-agent framework with role-based architecture.", tags: ["Roles"] },
+            { name: "Strands Agents", url: "https://github.com/strandsinc/strands-agents", cat: "Agents", sub: "Framework", desc: "Model-agnostic agents with AWS integrations.", tags: ["AWS"] },
             { name: "ChatDev", url: "https://github.com/OpenBMB/ChatDev", cat: "Agents", sub: "Simulation", desc: "Virtual software company.", tags: ["Sim"] },
             { name: "OpenDevin", url: "https://github.com/OpenDevin/OpenDevin", cat: "Agents", sub: "Coding", desc: "Open source autonomous software engineer.", tags: ["Code"] },
             { name: "Letta (MemGPT)", url: "https://github.com/cpacker/MemGPT", cat: "Agents", sub: "Memory", desc: "OS for LLM agents with long-term memory.", tags: ["Memory"] },
@@ -543,6 +555,9 @@
             { name: "Giskard", url: "https://docs.giskard.ai", cat: "LLMOps", sub: "Testing", desc: "Testing framework for AI models.", tags: ["Safety"] },
             { name: "HoneyHive", url: "https://docs.honeyhive.ai", cat: "LLMOps", sub: "Platform", desc: "Evaluation and observability platform.", tags: ["Prod"] },
             { name: "PromptLayer", url: "https://docs.promptlayer.com", cat: "LLMOps", sub: "CMS", desc: "Prompt management and tracking.", tags: ["CMS"] },
+            { name: "Langfuse", url: "https://langfuse.com", cat: "LLMOps", sub: "Observability", desc: "Open-source LLM engineering platform with tracing.", tags: ["OpenTelemetry"] },
+            { name: "Braintrust", url: "https://braintrust.dev", cat: "LLMOps", sub: "Evaluation", desc: "End-to-end platform for AI evaluation.", tags: ["Evals"] },
+            { name: "Opik", url: "https://docs.confident-ai.com", cat: "LLMOps", sub: "Testing", desc: "Open-source LLM evaluation by Comet.", tags: ["Testing"] },
             { name: "Helicone", url: "https://docs.helicone.ai", cat: "LLMOps", sub: "Proxy", desc: "Open-source LLM observability platform.", tags: ["Gateway"] },
             { name: "Portkey", url: "https://portkey.ai/docs", cat: "LLMOps", sub: "Gateway", desc: "Control panel for AI apps.", tags: ["Routing"] },
             { name: "Galileo", url: "https://docs.rungalileo.io", cat: "LLMOps", sub: "Evaluation", desc: "Evaluation for RAG & GenAI.", tags: ["Enterprise"] },
@@ -565,13 +580,26 @@
             { name: "Garak", url: "https://github.com/leondz/garak", cat: "Safety", sub: "Red Teaming", desc: "LLM vulnerability scanner.", tags: ["Hacking"] },
             { name: "Presidio", url: "https://microsoft.github.io/presidio", cat: "Safety", sub: "Privacy", desc: "Context-aware PII anonymization.", tags: ["Microsoft"] },
             { name: "Rebuff", url: "https://github.com/protectai/rebuff", cat: "Safety", sub: "Defense", desc: "Prompt injection detector.", tags: ["Injection"] },
+            { name: "Context7", url: "https://context7.com", cat: "Safety", sub: "Context", desc: "Version-specific code context for accurate AI coding.", tags: ["MCP"] },
 
             // 10. MULTIMODAL
             { name: "LlaVA", url: "https://llava-vl.github.io", cat: "Multimodal", sub: "Vision", desc: "Large Language-and-Vision Assistant.", tags: ["OSS"] },
+            { name: "ElevenLabs", url: "https://elevenlabs.io/docs", cat: "Multimodal", sub: "TTS", desc: "Advanced text-to-speech API with voice cloning.", tags: ["Audio"] },
+            { name: "Stable Diffusion", url: "https://github.com/Stability-AI/stablediffusion", cat: "Multimodal", sub: "Image Gen", desc: "Open-source image generation model.", tags: ["OSS"] },
+            { name: "Midjourney", url: "https://docs.midjourney.com", cat: "Multimodal", sub: "Image Gen", desc: "Leading AI image generation via API.", tags: ["Commercial"] },
             { name: "CLIP", url: "https://github.com/openai/CLIP", cat: "Multimodal", sub: "Embeddings", desc: "Contrastive Language-Image Pre-training.", tags: ["OpenAI"] },
             { name: "Whisper", url: "https://github.com/openai/whisper", cat: "Multimodal", sub: "Audio", desc: "Robust speech recognition.", tags: ["ASR"] },
             { name: "Bark", url: "https://github.com/suno-ai/bark", cat: "Multimodal", sub: "TTS", desc: "Transformer-based text-to-audio.", tags: ["Suno"] },
-            { name: "OpenCLIP", url: "https://github.com/mlfoundations/open_clip", cat: "Multimodal", sub: "Vision", desc: "Open source implementation of CLIP.", tags: ["LAION"] }
+            { name: "OpenCLIP", url: "https://github.com/mlfoundations/open_clip", cat: "Multimodal", sub: "Vision", desc: "Open source implementation of CLIP.", tags: ["LAION"] },
+            { name: "ElevenLabs", url: "https://elevenlabs.io/docs", cat: "Multimodal", sub: "TTS", desc: "Advanced text-to-speech API with voice cloning.", tags: ["Audio"] },
+            { name: "Stable Diffusion", url: "https://github.com/Stability-AI/stablediffusion", cat: "Multimodal", sub: "Image Gen", desc: "Open-source image generation model.", tags: ["OSS"] },
+            { name: "Midjourney", url: "https://docs.midjourney.com", cat: "Multimodal", sub: "Image Gen", desc: "Leading AI image generation via API.", tags: ["Commercial"] },
+
+            // 11. MCP (MODEL CONTEXT PROTOCOL)
+            { name: "MCP Specification", url: "https://modelcontextprotocol.io", cat: "MCP", sub: "Protocol", desc: "Anthropic's open standard for connecting AI to data.", tags: ["Standard"] },
+            { name: "FastMCP", url: "https://github.com/jlowin/fastmcp", cat: "MCP", sub: "Framework", desc: "Python framework for building MCP servers quickly.", tags: ["Python"] },
+            { name: "MCP Registry", url: "https://github.com/modelcontextprotocol/servers", cat: "MCP", sub: "Discovery", desc: "Official catalog for discovering MCP servers.", tags: ["Community"] },
+            { name: "mcp-agent", url: "https://github.com/chrishayuk/mcp-agent", cat: "MCP", sub: "Agents", desc: "Native MCP agent framework with durability.", tags: ["Temporal"] },
         ];
 
         // --- STATE & UTILS ---
@@ -835,7 +863,8 @@ I'll be asking follow-up questions, so please become an expert on this tool by t
                     'LLMOps': 'text-pink-600 bg-pink-50',
                     'Deployment': 'text-cyan-600 bg-cyan-50',
                     'Safety': 'text-red-600 bg-red-50',
-                    'Multimodal': 'text-fuchsia-600 bg-fuchsia-50'
+                    'Multimodal': 'text-fuchsia-600 bg-fuchsia-50',
+                    'MCP': 'text-amber-600 bg-amber-50'
                 };
                 const theme = colorMap[item.cat] || 'text-slate-600 bg-slate-50';
 
